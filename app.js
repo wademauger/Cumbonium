@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+var sanitizer = require('sanitizer')
 var express = require('express');
 var app = express();
 var server = require('http').Server(app);
@@ -22,7 +23,7 @@ server.listen(3000, function () {
 io.on('connection', function (socket) {
     socket.emit('chat-other', chat.history);
     socket.on('chat-personal', function (data) {
-        data = new Date().toLocaleTimeString() + " [" + socket.handshake.address + "] " + data;
+        data = new Date().toLocaleTimeString() + " [" + socket.handshake.address + "] " + sanitizer.escape(data);
         chat.history.push(data);
         if(chat.history.length > 10) {
             chat.history.splice(0, 1);
