@@ -31,6 +31,9 @@
                 $("#input-chat").val("");
             }
         });
+        setInterval(function() {
+            update();
+        }, 1000);
         function push(text) {
             var data = {
                 input: text
@@ -41,7 +44,6 @@
             xhr.onload = function(event) {
                 document.getElementById("output-chat").innerHTML = xhr.responseText;
             };
-//            console.log(JSON.stringify(data));
             xhr.send(JSON.stringify(data));
         }
         function update() {
