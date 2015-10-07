@@ -13,7 +13,6 @@
 
         <div class="panel panel-default">
             <div id="output-chat" class="panel-body">
-                Swag box
             </div>
             <div class="panel-footer">
                 <input id="input-chat" type="text" class="form-control">
@@ -23,12 +22,36 @@
 </body>
 <footer>
     <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            update();
+        });
         $("#input-chat").keyup(function(event) {
             if(event.keyCode == 13){
-                $("#output-chat").append('<br />' + $("#input-chat").val());
+                push($("#input-chat").val());
                 $("#input-chat").val("");
             }
         });
+        function push(text) {
+            var data = {
+                input: text
+            };
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/text", true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.onload = function(event) {
+                document.getElementById("output-chat").innerHTML = xhr.responseText;
+            };
+//            console.log(JSON.stringify(data));
+            xhr.send(JSON.stringify(data));
+        }
+        function update() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/text", true);
+            xhr.onload = function(event) {
+                document.getElementById("output-chat").innerHTML = xhr.responseText;
+            };
+            xhr.send();
+        }
     </script>
 </footer>
 </html>

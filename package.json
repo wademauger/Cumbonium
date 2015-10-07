@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wadeanthony0100/Cumbonium#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^4.13.3"
   }
 }
