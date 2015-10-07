@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <meta charset="UTF-8">
@@ -22,38 +23,18 @@
 </body>
 <footer>
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            update();
-        });
+        var io = io.connect('localhost:3000');
         $("#input-chat").keyup(function(event) {
             if(event.keyCode == 13){
-                push($("#input-chat").val());
+                io.emit("chat-personal", $("#input-chat").val());
                 $("#input-chat").val("");
             }
         });
-        setInterval(function() {
-            update();
-        }, 1000);
-        function push(text) {
-            var data = {
-                input: text
-            };
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/text", true);
-            xhr.setRequestHeader("Content-type", "application/json");
-            xhr.onload = function(event) {
-                document.getElementById("output-chat").innerHTML = xhr.responseText;
-            };
-            xhr.send(JSON.stringify(data));
-        }
-        function update() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/text", true);
-            xhr.onload = function(event) {
-                document.getElementById("output-chat").innerHTML = xhr.responseText;
-            };
-            xhr.send();
-        }
+        io.on('chat-other', function(data) {
+            for(i = 0; i < data.length; i++) {
+                document.getElementById("output-chat").innerHTML += data[i] + "<br />";
+            }
+        });
     </script>
 </footer>
 </html>

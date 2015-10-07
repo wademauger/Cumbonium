@@ -1,34 +1,28 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-var data = {};
-data.text = "Swag box";
-
+app.use(express.static("public")); // Mount public folder
 app.use(bodyParser.json()); // Support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Support encoded bodies
 
-app.use(express.static("public")); // Mount public folder
+var chat = {
+    history: ["Swag box"]
+};
 
-app.get("/random", function(req, res) {
-   res.send(200, Math.random());
-});
-
-app.post("/text", function(req, res) {
-    console.log(req.body);
-    if (typeof req.body.input != 'undefined') {
-        data.text += "<br />" + req.body.input;
-    }
-    res.status(200).send(data.text);
-});
-
-app.get("/text", function(req, res) {
-    res.status(200).send(data.text);
-});
-
-var server = app.listen(3000, function () {
+server.listen(3000, function () {
     var host = server.address().address;
     var port = server.address().port;
 
-    console.log('Example app listening at http://%s:%s', host, port);
+    console.log('Listening at http://%s:%s', host, port);
+});
+
+io.on('connection', function (socket) {
+    socket.emit('chat-other', chat.history);
+    socket.on('chat-personal', function (data) {
+        chat.history.push(data);
+        io.emit('chat-other', [data]);
+    });
 });
