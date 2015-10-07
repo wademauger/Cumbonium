@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/wadeanthony0100/Cumbonium/issues"
   },
-  "homepage": "https://github.com/wadeanthony0100/Cumbonium#readme"
+  "homepage": "https://github.com/wadeanthony0100/Cumbonium#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
 }
