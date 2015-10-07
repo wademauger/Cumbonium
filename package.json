@@ -1,0 +1,19 @@
+{
+  "name": "cumbonium",
+  "version": "1.0.0",
+  "description": "Joe and Wade make a web app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wadeanthony0100/Cumbonium.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wadeanthony0100/Cumbonium/issues"
+  },
+  "homepage": "https://github.com/wadeanthony0100/Cumbonium#readme"
+}
