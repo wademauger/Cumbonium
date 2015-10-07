@@ -1,11 +1,12 @@
 var express = require('express');
 var app = express();
+var data = {};
 
 app.use(express.static("public"));
 
-//app.get('/', function (req, res) {
-//    res.send('Hello World!');
-//});
+app.get("/random", function (req, res) {
+   res.send(200, Math.random());
+});
 
 var server = app.listen(3000, function () {
     var host = server.address().address;
