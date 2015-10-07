@@ -30,9 +30,10 @@
                 $("#input-chat").val("");
             }
         });
+
         io.on('chat-other', function(data) {
             for(i = 0; i < data.length; i++) {
-                document.getElementById("output-chat").innerHTML += data[i] + "<br />";
+                document.getElementById("output-chat").innerHTML += "<p style='margin: 0'>" + data[i] + "</p>";
             }
         });
     </script>

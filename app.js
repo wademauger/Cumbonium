@@ -22,7 +22,11 @@ server.listen(3000, function () {
 io.on('connection', function (socket) {
     socket.emit('chat-other', chat.history);
     socket.on('chat-personal', function (data) {
+        data = new Date().toLocaleTimeString() + " [" + socket.handshake.address + "] " + data;
         chat.history.push(data);
+        if(chat.history.length > 10) {
+            chat.history.splice(0, 1);
+        }
         io.emit('chat-other', [data]);
     });
 });
